@@ -1,12 +1,8 @@
-import { useState } from 'react';
-import { Landing } from './pages/Landing';
+// Imports
+import { Routing } from './routes/Routing';
 
 function App() {
-  return (
-    <div className="App">
-      <Landing />
-    </div>
-  );
+  return <Routing />;
 }
 
 export default App;

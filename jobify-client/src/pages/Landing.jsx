@@ -1,5 +1,6 @@
 // Imports
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 // Styles
 import Wrapper from '../assets/wrappers/LandingPage';
@@ -10,7 +11,7 @@ import mainImg from '../assets/images/main.svg';
 // Components
 import { Logo } from '../components';
 
-export const Landing = () => {
+const Landing = () => {
   return (
     <Wrapper>
       <nav>
@@ -29,10 +30,14 @@ export const Landing = () => {
             soluta ratione fuga hic numquam quibusdam saepe, rem, repellendus
             enim officia.
           </p>
-          <button className="btn btn-hero">Login/Register</button>
+          <Link to="/register" className="btn btn-hero">
+            Login/Register
+          </Link>
         </div>
         <img src={mainImg} alt="Job hunt" className="img main-img" />
       </div>
     </Wrapper>
   );
 };
+
+export default Landing;
