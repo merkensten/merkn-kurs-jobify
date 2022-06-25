@@ -1,29 +1,35 @@
 import React from 'react';
 import { Logo, FormRow, Alert } from '../exports/components';
 import Wrapper from '../assets/wrappers/RegisterPage';
+import { useAppContext } from '../exports/context';
 
 const initialState = {
   name: '',
   email: '',
   password: '',
   isMember: true,
-  showAlert: false,
 };
 
 const Register = () => {
   const [values, setValues] = React.useState(initialState);
   // global state and useNavigate
+  const { isLoading, showAlert, displayAlert } = useAppContext();
 
   const toggleMember = () => {
     setValues({ ...values, isMember: !values.isMember });
   };
 
   const handleChange = (event) => {
-    console.log(event.target);
+    setValues({ ...values, [event.target.name]: event.target.value });
   };
   const onFormSubmit = (event) => {
     event.preventDefault();
-    console.log(event.target);
+    const { name, email, password, isMember } = values;
+    if (!email || !password || (!isMember && !name)) {
+      displayAlert('Please fill out all fields', 'danger');
+      return;
+    }
+    console.log(values);
   };
 
   return (
@@ -31,11 +37,11 @@ const Register = () => {
       <form className="form" onSubmit={onFormSubmit}>
         <Logo />
         <h3>{values.isMember ? 'Login' : 'Register'}</h3>
-        {values.showAlert && <Alert />}
+        {showAlert && <Alert />}
         {!values.isMember && (
           <FormRow
             type="text"
-            name="Name"
+            name="name"
             value={values.name}
             handleChange={handleChange}
             labelText="Name"
@@ -44,14 +50,14 @@ const Register = () => {
 
         <FormRow
           type="email"
-          name="Email"
+          name="email"
           value={values.email}
           handleChange={handleChange}
           labelText="Email"
         />
         <FormRow
           type="password"
-          name="Password"
+          name="password"
           value={values.password}
           handleChange={handleChange}
           labelText="Password"
