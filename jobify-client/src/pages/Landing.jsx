@@ -5,14 +5,16 @@ import React from 'react';
 import Wrapper from '../assets/wrappers/LandingPage';
 
 // Images
-import logo from '../assets/images/logo.svg';
 import mainImg from '../assets/images/main.svg';
+
+// Components
+import { Logo } from '../components';
 
 export const Landing = () => {
   return (
     <Wrapper>
       <nav>
-        <img src={logo} alt="Jobify" />
+        <Logo />
       </nav>
 
       <div className="container page">
