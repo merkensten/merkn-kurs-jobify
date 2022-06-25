@@ -9,7 +9,7 @@ import Wrapper from '../assets/wrappers/LandingPage';
 import mainImg from '../assets/images/main.svg';
 
 // Components
-import { Logo } from '../components';
+import { Logo } from '../exports/components';
 
 const Landing = () => {
   return (

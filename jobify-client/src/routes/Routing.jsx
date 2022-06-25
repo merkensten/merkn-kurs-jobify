@@ -3,7 +3,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 
 // Pages
-import { Landing, Register, Error, Dashboard } from '../pages';
+import { Landing, Register, Error, Dashboard } from '../exports/pages';
 
 export const Routing = () => {
   return (
