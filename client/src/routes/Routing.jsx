@@ -9,7 +9,7 @@ export const Routing = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<div>Dashboard</div>}></Route>
+        <Route path="/" element={<Dashboard />}></Route>
         <Route path="/register" element={<Register />} />
         <Route path="/landing" element={<Landing />} />
         <Route path="*" element={<Error />} />
