@@ -1,6 +1,7 @@
 // imports
 import express from 'express';
 import dotenv from 'dotenv';
+import 'express-async-errors';
 
 // db and authenticateUser
 import connectDB from './db/connect.js';
