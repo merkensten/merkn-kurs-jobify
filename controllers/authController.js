@@ -11,13 +11,23 @@ const register = async (req, res) => {
 
   // Check if user already exists
   const userAlredyExists = await User.findOne({ email });
-  
+
   if (userAlredyExists) {
     throw new BadRequestError('User already exists');
   }
 
   const user = await User.create({ name, email, password });
-  res.status(StatusCodes.CREATED).json(user);
+  const token = user.createJWT();
+  res.status(StatusCodes.CREATED).json({
+    user: {
+      email: user.email,
+      lastName: user.lastName,
+      location: user.location,
+      name: user.name,
+    },
+    token,
+    location: user.location,
+  });
 };
 const login = async (req, res) => {
   res.send('Login user');
