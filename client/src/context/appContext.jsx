@@ -10,6 +10,8 @@ import {
   SETUP_USER_BEGIN,
   SETUP_USER_SUCCESS,
   SETUP_USER_ERROR,
+  TOGGLE_SIDEBAR,
+  LOGOUT_USER,
 } from '../exports/contexts/actions';
 
 const token = localStorage.getItem('token');
@@ -25,6 +27,7 @@ const initialState = {
   token: token,
   userLocation: userLocation || '',
   jobLocation: userLocation || '',
+  showSidebar: false,
 };
 
 const apiUrl = import.meta.env.VITE_API_URL;
@@ -81,9 +84,18 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  const toggleSidebar = () => {
+    dispatch({ type: TOGGLE_SIDEBAR });
+  };
+
+  const logoutUser = () => {
+    dispatch({ type: LOGOUT_USER });
+    removeUserFromLocalStorage();
+  };
+
   return (
     <AppContext.Provider
-      value={{ ...state, displayAlert, setupUser }}
+      value={{ ...state, displayAlert, setupUser, toggleSidebar, logoutUser }}
     >
       {children}
     </AppContext.Provider>
