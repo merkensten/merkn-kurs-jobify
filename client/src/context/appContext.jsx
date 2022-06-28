@@ -3,14 +3,14 @@ import React from 'react';
 import axios from 'axios';
 
 // internal imports
-import { reducer } from '../exports/context';
+import { reducer } from '../exports/contexts/reducers';
 import {
   DISPLAY_ALERT,
   CLEAR_ALERT,
-  REGISTER_USER_BEGIN,
-  REGISTER_USER_SUCCESS,
-  REGISTER_USER_ERROR,
-} from '../exports/context';
+  SETUP_USER_BEGIN,
+  SETUP_USER_SUCCESS,
+  SETUP_USER_ERROR,
+} from '../exports/contexts/actions';
 
 const token = localStorage.getItem('token');
 const userLocation = localStorage.getItem('location');
@@ -24,7 +24,7 @@ const initialState = {
   user: user ? JSON.parse(user) : null,
   token: token,
   userLocation: userLocation || '',
-  jobLocation: userLocation ||'',
+  jobLocation: userLocation || '',
 };
 
 const apiUrl = import.meta.env.VITE_API_URL;
@@ -46,7 +46,6 @@ const AppProvider = ({ children }) => {
   };
 
   const addUserToLocalStorage = ({ user, token, location }) => {
-    console.log("addUserToLocalStorage");
     localStorage.setItem('user', JSON.stringify(user));
     localStorage.setItem('token', token);
     localStorage.setItem('location', location);
@@ -58,24 +57,24 @@ const AppProvider = ({ children }) => {
     localStorage.removeItem('location');
   };
 
-  const registerUser = async (currentUser) => {
-    dispatch({ type: REGISTER_USER_BEGIN });
+  const setupUser = async ({ currentUser, endPoint, alertText }) => {
+    dispatch({ type: SETUP_USER_BEGIN });
     try {
-      const response = await axios.post(
-        apiUrl + `/api/v1/auth/register`,
+      const { data } = await axios.post(
+        apiUrl + `/api/v1/auth/${endPoint}`,
         currentUser
       );
-      const { user, token, location } = response.data;
+      const { user, token, location } = data;
       dispatch({
-        type: REGISTER_USER_SUCCESS,
-        payload: { user, token, location },
+        type: SETUP_USER_SUCCESS,
+        payload: { user, token, location, alertText },
       });
 
       // add user to localStorage
       addUserToLocalStorage({ user, token, location });
     } catch (error) {
       dispatch({
-        type: REGISTER_USER_ERROR,
+        type: SETUP_USER_ERROR,
         payload: { message: error.response.data.message },
       });
     }
@@ -83,7 +82,9 @@ const AppProvider = ({ children }) => {
   };
 
   return (
-    <AppContext.Provider value={{ ...state, displayAlert, registerUser }}>
+    <AppContext.Provider
+      value={{ ...state, displayAlert, setupUser }}
+    >
       {children}
     </AppContext.Provider>
   );

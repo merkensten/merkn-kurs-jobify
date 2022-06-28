@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 // internal imports
 import { Logo, FormRow, Alert } from '../exports/components';
 import Wrapper from '../assets/wrappers/RegisterPage';
-import { useAppContext } from '../exports/context';
+import { useAppContext } from '../exports/contexts';
 
 const initialState = {
   name: '',
@@ -16,9 +16,9 @@ const initialState = {
 
 const Register = () => {
   const navigate = useNavigate();
-  const { user, isLoading, showAlert, displayAlert, registerUser } = useAppContext();
+  const { user, isLoading, showAlert, displayAlert, setupUser } =
+    useAppContext();
   const [values, setValues] = React.useState(initialState);
-
 
   React.useEffect(() => {
     if (user) {
@@ -49,11 +49,20 @@ const Register = () => {
     };
 
     if (isMember) {
-      console.log('Alredy a member');
+      // Logga in användare
+      setupUser({
+        currentUser,
+        endPoint: 'login',
+        alertText: 'Login Successful! Redirectiing...',
+      });
     } else {
-      registerUser(currentUser);
+      // Skapa användare
+      setupUser({
+        currentUser,
+        endPoint: 'register',
+        alertText: 'User Created! Redirectiing...',
+      });
     }
-    console.log(values);
   };
 
   return (

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAppContext } from '../exports/context';
+import { useAppContext } from '../exports/contexts';
 
 const Alert = () => {
   const { alertType, alertText } = useAppContext();
