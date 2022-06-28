@@ -4,15 +4,7 @@ import axios from 'axios';
 
 // internal imports
 import { reducer } from '../exports/contexts/reducers';
-import {
-  DISPLAY_ALERT,
-  CLEAR_ALERT,
-  SETUP_USER_BEGIN,
-  SETUP_USER_SUCCESS,
-  SETUP_USER_ERROR,
-  TOGGLE_SIDEBAR,
-  LOGOUT_USER,
-} from '../exports/contexts/actions';
+import { ACTIONS } from '../exports/contexts/actions';
 
 const token = localStorage.getItem('token');
 const userLocation = localStorage.getItem('location');
@@ -38,13 +30,13 @@ const AppProvider = ({ children }) => {
   const [state, dispatch] = React.useReducer(reducer, initialState);
 
   const displayAlert = () => {
-    dispatch({ type: DISPLAY_ALERT });
+    dispatch({ type: ACTIONS.DISPLAY_ALERT });
     clearAlert();
   };
 
   const clearAlert = () => {
     setTimeout(() => {
-      dispatch({ type: CLEAR_ALERT });
+      dispatch({ type: ACTIONS.CLEAR_ALERT });
     }, 3000);
   };
 
@@ -61,7 +53,7 @@ const AppProvider = ({ children }) => {
   };
 
   const setupUser = async ({ currentUser, endPoint, alertText }) => {
-    dispatch({ type: SETUP_USER_BEGIN });
+    dispatch({ type: ACTIONS.SETUP_USER_BEGIN });
     try {
       const { data } = await axios.post(
         apiUrl + `/api/v1/auth/${endPoint}`,
@@ -69,7 +61,7 @@ const AppProvider = ({ children }) => {
       );
       const { user, token, location } = data;
       dispatch({
-        type: SETUP_USER_SUCCESS,
+        type: ACTIONS.SETUP_USER_SUCCESS,
         payload: { user, token, location, alertText },
       });
 
@@ -77,7 +69,7 @@ const AppProvider = ({ children }) => {
       addUserToLocalStorage({ user, token, location });
     } catch (error) {
       dispatch({
-        type: SETUP_USER_ERROR,
+        type: ACTIONS.SETUP_USER_ERROR,
         payload: { message: error.response.data.message },
       });
     }
@@ -85,11 +77,11 @@ const AppProvider = ({ children }) => {
   };
 
   const toggleSidebar = () => {
-    dispatch({ type: TOGGLE_SIDEBAR });
+    dispatch({ type: ACTIONS.TOGGLE_SIDEBAR });
   };
 
   const logoutUser = () => {
-    dispatch({ type: LOGOUT_USER });
+    dispatch({ type: ACTIONS.LOGOUT_USER });
     removeUserFromLocalStorage();
   };
 

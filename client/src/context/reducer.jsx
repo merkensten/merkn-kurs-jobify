@@ -1,17 +1,9 @@
 // internal imports
-import {
-  DISPLAY_ALERT,
-  CLEAR_ALERT,
-  SETUP_USER_BEGIN,
-  SETUP_USER_SUCCESS,
-  SETUP_USER_ERROR,
-  TOGGLE_SIDEBAR,
-  LOGOUT_USER,
-} from '../exports/contexts/actions';
+import { ACTIONS } from '../exports/contexts/actions';
 import { initialState } from '../exports/contexts';
 
 const reducer = (state, action) => {
-  if (action.type === DISPLAY_ALERT) {
+  if (action.type === ACTIONS.DISPLAY_ALERT) {
     return {
       ...state,
       showAlert: true,
@@ -19,7 +11,7 @@ const reducer = (state, action) => {
       alertText: 'Please provide all values',
     };
   }
-  if (action.type === CLEAR_ALERT) {
+  if (action.type === ACTIONS.CLEAR_ALERT) {
     return {
       ...state,
       showAlert: false,
@@ -29,10 +21,10 @@ const reducer = (state, action) => {
   }
 
   // setup User
-  if (action.type === SETUP_USER_BEGIN) {
+  if (action.type === ACTIONS.SETUP_USER_BEGIN) {
     return { ...state, isLoading: true };
   }
-  if (action.type === SETUP_USER_SUCCESS) {
+  if (action.type === ACTIONS.SETUP_USER_SUCCESS) {
     return {
       ...state,
       isLoading: false,
@@ -45,7 +37,7 @@ const reducer = (state, action) => {
       alertText: action.payload.alertText,
     };
   }
-  if (action.type === SETUP_USER_ERROR) {
+  if (action.type === ACTIONS.SETUP_USER_ERROR) {
     return {
       ...state,
       isLoading: false,
@@ -56,12 +48,12 @@ const reducer = (state, action) => {
   }
 
   // toggle sidebar
-  if (action.type === TOGGLE_SIDEBAR) {
+  if (action.type === ACTIONS.TOGGLE_SIDEBAR) {
     return { ...state, showSidebar: !state.showSidebar };
   }
 
   // Logout user
-  if (action.type === LOGOUT_USER) {
+  if (action.type === ACTIONS.LOGOUT_USER) {
     return {
       ...initialState,
       user: null,
