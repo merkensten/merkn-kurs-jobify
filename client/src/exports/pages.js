@@ -1,7 +1,26 @@
 // pages
 import Landing from '../pages/Landing';
 import Register from '../pages/Register';
-import Dashboard from '../pages/Dashboard';
 import Error from '../pages/Error';
 
-export { Landing, Register, Dashboard, Error };
+// App pages
+import AddJob from '../pages/dashboard/AddJob';
+import AllJobs from '../pages/dashboard/AllJobs';
+import Profile from '../pages/dashboard/Profile';
+import Stats from '../pages/dashboard/Stats';
+import SharedLayout from '../pages/dashboard/SharedLayout';
+
+// Protect routes wrapper
+import ProtectedRoute from '../pages/ProtectedRoute';
+
+export {
+  Landing,
+  Register,
+  Error,
+  AddJob,
+  AllJobs,
+  Profile,
+  Stats,
+  SharedLayout,
+  ProtectedRoute,
+};
