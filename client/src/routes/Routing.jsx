@@ -15,7 +15,7 @@ import {
   ProtectedRoute,
 } from '../exports/pages';
 
-export const Routing = () => {
+const Routing = () => {
   return (
     <BrowserRouter>
       <Routes>
@@ -40,3 +40,5 @@ export const Routing = () => {
     </BrowserRouter>
   );
 };
+
+export default Routing;

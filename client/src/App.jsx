@@ -1,5 +1,5 @@
 // Imports
-import { Routing } from './routes/Routing';
+import { Routing } from './exports/routes';
 
 function App() {
   return <Routing />;
