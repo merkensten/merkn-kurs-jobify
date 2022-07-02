@@ -56,13 +56,25 @@ const login = async (req, res) => {
   res.send('Login user');
 };
 const updateUser = async (req, res) => {
-  console.log(req.user);
-  res.send('update user');
-};
+  const { email, name, lastName, location } = req.body;
 
-// const deleteUser = async (req, res) => {
-//   res.send('delete user');
-// };
+  if (!email || !name || !lastName || !location) {
+    throw new BadRequestError('Please provide all values');
+  }
+
+  const user = await User.findOne({ _id: req.user.userId });
+
+  user.email = email;
+  user.name = name;
+  user.lastName = lastName;
+  user.location = location;
+
+  await user.save();
+
+  const token = user.createJWT();
+
+  res.status(StatusCodes.OK).json({ user, token, location: user.location });
+};
 
 const deleteUser = async (req, res) => {
   try {
